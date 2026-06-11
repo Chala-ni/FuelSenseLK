@@ -1,0 +1,78 @@
+# Project docs (kept locally, not in repo)
+docs/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Python / Django
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+*.egg
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+*.log
+db.sqlite3
+media/
+staticfiles/
+.env
+.env.*
+!.env.example
+
+# Flutter / Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+*.iml
+*.ipr
+*.iws
+ios/Pods/
+ios/.symlinks/
+android/.gradle/
+android/local.properties
+android/key.properties
+*.jks
+*.keystore
+
+# ML / Data
+*.pkl
+*.h5
+*.pt
+*.onnx
+data/raw/
+data/processed/
+models/checkpoints/
+notebooks/.ipynb_checkpoints/
+
+# Node (if used for tooling)
+node_modules/
+npm-debug.log*
+
+# Secrets
+*.pem
+credentials.json
+secrets.json
