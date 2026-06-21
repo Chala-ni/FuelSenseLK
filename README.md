@@ -59,7 +59,7 @@ python scripts/validate_dataset.py
 ## Status
 
 ✅ **Sprint 1 complete** — validated synthetic dataset, documentation, dev environment.  
-📋 **Sprint 2 next** — Prophet/LSTM training + Django backend scaffold.  
+🔄 **Sprint 2 in progress** — Django backend scaffolded; Prophet/LSTM training scripts added.  
 See `docs/SPRINT_PLAN.md` and `docs/SPRINT_1_COMPLETION.md`.
 
 ## Author

@@ -1,0 +1,13 @@
+Django>=5.0,<6
+djangorestframework>=3.15
+djangorestframework-simplejwt>=5.3
+django-cors-headers>=4.3
+django-filter>=24.0
+psycopg2-binary>=2.9
+python-dotenv>=1.0
+drf-spectacular>=0.27
+
+# Sprint 3+
+# channels>=4.0
+# celery>=5.3
+# redis>=5.0
