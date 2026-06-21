@@ -31,15 +31,36 @@ FuelSense LK addresses the lack of real-time fuel stock visibility at petrol and
 
 ```
 FuelSenseLK/
-├── backend/                 # Django REST API (planned)
-├── mobile/                  # Flutter mobile app (planned)
-├── web/                     # Flutter Web dashboard (planned)
-└── ml/                      # ML models and data pipeline (planned)
+├── backend/                 # Django REST API (Sprint 2+)
+├── mobile/                  # Flutter mobile app (Sprint 4+)
+├── web/                     # Flutter Web dashboard (Sprint 5+)
+├── ml/                      # Dataset generation & ML training (Sprint 1–2)
+├── docker-compose.yml       # PostgreSQL + PostGIS + Redis
+└── docs/                    # Sprint plan & proposal (local, gitignored)
+```
+
+## Quick Start (Sprint 1)
+
+```bash
+# Infrastructure
+docker-compose up -d
+
+# ML data pipeline
+cd ml
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+python scripts/generate_stations.py
+python scripts/generate_synthetic_dataset.py
+python scripts/split_dataset.py
+python scripts/validate_dataset.py
 ```
 
 ## Status
 
-🚧 **Project initiation** — repository setup and development planning in progress.
+✅ **Sprint 1 complete** — validated synthetic dataset, documentation, dev environment.  
+📋 **Sprint 2 next** — Prophet/LSTM training + Django backend scaffold.  
+See `docs/SPRINT_PLAN.md` and `docs/SPRINT_1_COMPLETION.md`.
 
 ## Author
 

@@ -1,0 +1,18 @@
+{
+  "train_max_timestamp": "2025-09-30 23:00:00",
+  "val_min_timestamp": "2025-10-01 00:00:00",
+  "val_max_timestamp": "2025-11-30 23:00:00",
+  "test_min_timestamp": "2025-12-01 00:00:00",
+  "no_train_val_overlap": true,
+  "no_val_test_overlap": true,
+  "lstm_lookback_hours": 12,
+  "lstm_horizons_hours": [
+    6,
+    12,
+    24
+  ],
+  "lstm_causal_rule": "Features use stock/demand at t and earlier only; labels use future stock-out within horizon",
+  "prophet_regressor_rule": "Regressors must be known at forecast origin; no same-timestamp target in features",
+  "random_shuffle_used": false,
+  "all_passed": true
+}

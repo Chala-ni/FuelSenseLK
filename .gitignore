@@ -1,5 +1,5 @@
-# Project docs (kept locally, not in repo)
-docs/
+# Project docs (proposal local only — not root /docs/)
+/docs/
 
 # OS
 .DS_Store

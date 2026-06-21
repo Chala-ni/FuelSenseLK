@@ -1,0 +1,18 @@
+date,holiday_type,name
+2025-01-13,poya,Duruthu Poya
+2025-02-12,poya,Navam Poya
+2025-03-13,poya,Madin Poya
+2025-04-12,poya,Bak Poya
+2025-05-12,poya,Vesak Poya
+2025-06-10,poya,Poson Poya
+2025-07-10,poya,Esala Poya
+2025-08-08,poya,Nikini Poya
+2025-09-07,poya,Binara Poya
+2025-10-06,poya,Vap Poya
+2025-11-05,poya,Il Poya
+2025-12-04,poya,Unduvap Poya
+2025-04-01,school_holiday,School Holiday Start
+2025-04-30,school_holiday,School Holiday End
+2025-08-01,school_holiday,School Holiday Start
+2025-08-31,school_holiday,School Holiday End
+2025-06-15,price_change,Simulated Fuel Price Change
