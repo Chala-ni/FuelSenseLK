@@ -11,7 +11,10 @@ DEBUG = os.getenv("DEBUG", "True").lower() == "true"
 ALLOWED_HOSTS = [h.strip() for h in os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",") if h.strip()]
 
 _db_url = os.getenv("DATABASE_URL", "")
-USE_POSTGIS = _db_url.startswith("postgresql")
+USE_POSTGIS = _db_url.startswith("postgresql") and os.getenv("USE_POSTGIS", "true").lower() == "true"
+
+ML_MODELS_ROOT = BASE_DIR.parent / "ml" / "models"
+ML_PROPHET_GRANULARITY = os.getenv("ML_PROPHET_GRANULARITY", "hourly")
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -24,9 +27,20 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "drf_spectacular",
+    "channels",
     "accounts",
     "stations",
+    "vehicles",
+    "operations",
+    "forecasting",
+    "crowd",
+    "crisis",
+    "pricing",
+    "realtime",
+    "analytics",
 ]
+
+ASGI_APPLICATION = "config.asgi.application"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -57,11 +71,16 @@ TEMPLATES = [
     },
 ]
 
-# PostGIS when DATABASE_URL set; SQLite fallback for local dev without Docker
-if USE_POSTGIS:
+# PostgreSQL when DATABASE_URL set; SQLite fallback for local dev without Docker
+if _db_url.startswith("postgresql"):
+    _pg_engine = (
+        "django.contrib.gis.db.backends.postgis"
+        if USE_POSTGIS
+        else "django.db.backends.postgresql"
+    )
     DATABASES = {
         "default": {
-            "ENGINE": "django.contrib.gis.db.backends.postgis",
+            "ENGINE": _pg_engine,
             "NAME": os.getenv("POSTGRES_DB", "fuelsense"),
             "USER": os.getenv("POSTGRES_USER", "fuelsense"),
             "PASSWORD": os.getenv("POSTGRES_PASSWORD", "fuelsense_dev"),
@@ -116,5 +135,33 @@ SIMPLE_JWT = {
 SPECTACULAR_SETTINGS = {
     "TITLE": "FuelSense LK API",
     "DESCRIPTION": "Fuel availability monitoring and demand forecasting API",
-    "VERSION": "0.1.0",
+    "VERSION": "0.3.0",
 }
+
+_broker = os.getenv("CELERY_BROKER_URL", "redis://localhost:6379/1")
+CELERY_BROKER_URL = _broker
+CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND", _broker)
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_BEAT_SCHEDULE = {
+    "prophet-nightly": {
+        "task": "forecasting.run_prophet_forecasts",
+        "schedule": 86400.0,  # daily; replace with crontab when celery beat configured
+    },
+    "lstm-hourly": {
+        "task": "forecasting.run_depletion_risk",
+        "schedule": 3600.0,
+    },
+}
+
+_redis_url = os.getenv("REDIS_URL", "")
+if _redis_url:
+    CHANNEL_LAYERS = {
+        "default": {
+            "BACKEND": "channels_redis.core.RedisChannelLayer",
+            "CONFIG": {"hosts": [_redis_url]},
+        }
+    }
+else:
+    CHANNEL_LAYERS = {
+        "default": {"BACKEND": "channels.layers.InMemoryChannelLayer"},
+    }

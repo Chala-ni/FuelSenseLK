@@ -54,3 +54,23 @@ python scripts/fetch_open_meteo_weather.py
 - `docs/data_bias_and_leakage_controls.md`
 - `docs/ml_scheduling_alignment.md`
 - `docs/ui_performance_requirements.md`
+
+## Sprint 2 — Model Training
+
+**Important:** Run training **one model at a time** — parallel jobs will max out your CPU.
+
+```bash
+cd ml/scripts
+python train_all.py              # recommended: LSTM -> Prophet -> ARIMA -> reports
+```
+
+Or step by step:
+
+```bash
+python train_lstm.py --fuel-type petrol_92 --horizons 6,12,24
+python train_prophet.py --fuel-type petrol_92 --granularity hourly
+python train_arima.py --fuel-type petrol_92
+python generate_ml_reports.py
+```
+
+Reports: `reports/prophet_performance.md`, `lstm_performance.md`, `arima_baseline.md`

@@ -5,3 +5,4 @@ data/processed/*.csv
 data/splits/*.csv
 data/raw/open_meteo_weather_2025.csv
 reports/*.json
+models/

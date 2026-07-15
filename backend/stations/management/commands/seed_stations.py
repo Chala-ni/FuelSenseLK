@@ -24,6 +24,7 @@ class Command(BaseCommand):
                 _, was_created = Station.objects.update_or_create(
                     name=row["name"],
                     defaults={
+                        "ml_station_id": int(row["station_id"]),
                         "district": row["district"],
                         "station_type": row["station_type"],
                         "latitude": float(row["latitude"]),

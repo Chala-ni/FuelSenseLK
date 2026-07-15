@@ -110,9 +110,24 @@ DISTRICT_RAINFALL_FACTOR = {
     "Mullaitivu": 0.50, "Kilinochchi": 0.48,
 }
 
-# LSTM
+# LSTM architecture & training (Sprint 2 full pipeline)
 LSTM_LOOKBACK_HOURS = 12
 LSTM_HORIZONS_HOURS = (6, 12, 24)
+LSTM_FEATURE_COLUMNS = (
+    "stock_percentage",
+    "hour_of_day",
+    "rainfall_mm",
+    "is_poya_day",
+    "is_weekday",
+    "demand_litres",
+)
+LSTM_UNITS = (128, 64)
+LSTM_DROPOUT = 0.3
+LSTM_EPOCHS = 50
+LSTM_BATCH_SIZE = 512
+LSTM_EARLY_STOPPING_PATIENCE = 7
+LSTM_LEARNING_RATE = 1e-3
+LSTM_CLASSIFICATION_THRESHOLD = 0.5
 STOCKOUT_THRESHOLD_PCT = 5.0
 
 # ML targets (dataset_design.md §10)

@@ -1,41 +1,67 @@
 # FuelSense LK — Backend (Django)
 
-**Status:** Sprint 2 — scaffolded
-
-## Stack
-
-- Django 5 + Django REST Framework
-- SimpleJWT (access 15min / refresh 7d)
-- drf-spectacular (Swagger)
-- SQLite (local dev) or PostgreSQL + PostGIS (Docker)
+**Status:** Sprint 3 — core APIs & real-time layer
 
 ## Setup
 
 ```bash
 cd backend
-python -m venv venv
-venv\Scripts\activate
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py seed_stations
+python manage.py seed_stock_levels
+python manage.py seed_prices
+python manage.py create_demo_users
 python manage.py runserver
 ```
 
-Health check: http://127.0.0.1:8000/api/health/
+Swagger: http://127.0.0.1:8000/api/docs/
 
-## With Docker (PostGIS)
+## Sprint 3 API
+
+| Endpoint | Role | Description |
+|----------|------|-------------|
+| `POST /api/dispense/` | Attendant | QR scan dispense → stock deduct + WebSocket |
+| `GET /api/dispense/history/` | Driver/staff | Fuel history |
+| `POST /api/delivery/` | Attendant | Log tanker delivery → stock add |
+| `GET /api/delivery/history/` | Manager/admin | Delivery history |
+| `POST /api/crowd-reports/` | Driver | Crowd status (expires 2h) |
+| `GET /api/stations/{id}/crowd-reports/` | Public | Active crowd reports |
+| `GET/POST /api/crisis/status/` | Public/admin | Crisis mode + quotas |
+| `POST /api/crisis/activate/` | Admin | Enable crisis quotas |
+| `GET /api/vehicles/{id}/qr/` | Driver | QR payload for vehicle |
+| `POST /api/prices/` | Admin | Log price change |
+| `ws/stations/{id}/?token=<jwt>` | Auth | Live stock WebSocket |
+
+## Celery (optional — needs Redis)
 
 ```bash
-# From project root
-docker compose up -d
-# Set in .env: DATABASE_URL=postgresql://fuelsense:fuelsense_dev@localhost:5432/fuelsense
-python manage.py migrate
-python manage.py seed_stations
+celery -A config worker -l info
 ```
 
-## Apps
+## ML inference (trained models)
 
-| App | Purpose |
-|-----|---------|
-| `accounts` | Custom User model with roles (driver, attendant, manager, admin) |
-| `stations` | Station model + `seed_stations` management command |
+Models load from `../ml/models/` (LSTM + Prophet). Heuristic fallback if files missing.
+
+```bash
+python manage.py run_ml_forecasts
+# or
+python manage.py seed_forecasts
+```
+
+Celery tasks `run_prophet_forecasts` and `run_depletion_risk` use the same services.
+
+## Docker (PostgreSQL + Redis)
+
+1. Start **Docker Desktop**
+2. From project root: `docker compose up -d`
+3. Uncomment database/redis lines in `.env`
+4. `python manage.py migrate` and re-seed
+
+Use `USE_POSTGIS=false` on Windows without GDAL (standard PostgreSQL backend).
+
+## Tests
+
+```bash
+python manage.py test operations accounts stations
+```

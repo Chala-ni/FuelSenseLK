@@ -1,0 +1,9 @@
+{
+  "name": "FuelSense LK Manager",
+  "short_name": "FuelSense",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#1B5E20",
+  "theme_color": "#1B5E20",
+  "description": "Station manager dashboard for FuelSense LK"
+}

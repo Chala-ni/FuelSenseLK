@@ -1,0 +1,15 @@
+name: fuelsense_ui
+description: FuelSense LK shared design system — theme, colors, and UI components.
+publish_to: none
+version: 1.0.0
+
+environment:
+  sdk: ">=3.2.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_fonts: ^6.2.1
+
+dev_dependencies:
+  flutter_lints: ^3.0.0

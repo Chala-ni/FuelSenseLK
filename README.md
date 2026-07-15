@@ -59,8 +59,10 @@ python scripts/validate_dataset.py
 ## Status
 
 ✅ **Sprint 1 complete** — validated synthetic dataset, documentation, dev environment.  
-🔄 **Sprint 2 in progress** — Django backend scaffolded; Prophet/LSTM training scripts added.  
-See `docs/SPRINT_PLAN.md` and `docs/SPRINT_1_COMPLETION.md`.
+✅ **Sprint 2 complete** — Django backend auth, schema, station API (ML training deferred).  
+✅ **Sprint 3 complete** — dispense/delivery APIs, WebSocket, Celery heuristic tasks.  
+🔄 **Sprint 4 in progress** — Flutter driver modules (8 screens).  
+See `docs/SPRINT_PLAN.md` and sprint completion notes in `docs/`.
 
 ## Author
 

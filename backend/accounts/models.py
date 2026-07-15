@@ -12,7 +12,15 @@ class User(AbstractUser):
 
     email = models.EmailField(unique=True)
     role = models.CharField(max_length=20, choices=Role.choices, default=Role.DRIVER)
+    station = models.ForeignKey(
+        "stations.Station",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="staff",
+    )
     fcm_token = models.CharField(max_length=512, blank=True, default="")
+    notification_preferences = models.JSONField(default=dict, blank=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]

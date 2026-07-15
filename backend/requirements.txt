@@ -6,8 +6,14 @@ django-filter>=24.0
 psycopg2-binary>=2.9
 python-dotenv>=1.0
 drf-spectacular>=0.27
+channels>=4.0
+celery>=5.3
+channels-redis>=4.2
+redis>=5.0
 
-# Sprint 3+
-# channels>=4.0
-# celery>=5.3
-# redis>=5.0
+# ML inference (uses trained models in ../ml/models/)
+numpy>=1.26
+pandas>=2.2
+scikit-learn>=1.4
+prophet>=1.1
+tensorflow>=2.16
